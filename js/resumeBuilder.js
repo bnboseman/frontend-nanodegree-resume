@@ -27,10 +27,28 @@ var projects = {
         "title":"Resume Project",
         "dates":2015,
         "description": "Project for Udacity javascript class",
-        "images":[]
+        "images":["http://www.NicholeBoseman.com/wp-content/uploads/chanellegray-thumbnail.jpg", "http://www.NicholeBoseman.com/wp-content/uploads/chanellegray-thumbnail.jpg"  ],
+        
         }
-    ]
-}   
+    ],
+    "display": function() {
+            for (project in this.projects) {
+                 $("#projects").append(HTMLprojectStart);
+                 var formattedTitle = HTMLprojectTitle .replace("%data%", this.projects[project].title);
+                 $(".project-entry:last").append(formattedTitle);
+                 var formattedDates = HTMLprojectDates.replace("%data%", this.projects[project].dates);
+                 $(".project-entry:last").append(formattedDates);
+                 var formattedDescription = HTMLprojectDescription.replace("%data%", this.projects[project].description);
+                 $(".project-entry:last").append(formattedDescription);
+                 if (this.projects[project].images.length > 0) {
+                    for (image in this.projects[project].images){
+                        var formattedImage = HTMLprojectImage.replace("%data%", this.projects[project].images[image]);
+                        $(".project-entry:last").append(formattedImage);
+                    }
+                 }
+            }
+    }
+}
 var work = {
     "jobs" : [
         {
@@ -45,7 +63,7 @@ var work = {
             "title":"Junior Web Developer",
             "location":"New York, NY",
             "dates":2015,
-            "description":"Did Draftkings Playbook"
+            "description":"Did Draftkings Playbook",
         } 
     ]
 };
@@ -91,18 +109,36 @@ if (bio.skills.length > 0) {
     }
     
 }
-
-for (job in work.jobs) {
-    $("#workExperience").append(HTMLworkStart);
-    var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
-    var formattedTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
-    var formattedEmployerTitle = formattedEmployer + formattedTitle;
-   
-    
-    $(".work-entry:last").append(formattedEmployerTitle);
-    
-    var formattedDates = HTMLworkDates.replace("%data%",work.jobs[job].dates);
-    $(".work-entry:last").append(formattedDates);
-    var formattedDescription = HTMLworkDescription.replace("%data%",work.jobs[job].description);
-    $(".work-entry:last").append(formattedDescription);
+var displayWork = function() {
+        for (job in work.jobs) {
+        $("#workExperience").append(HTMLworkStart);
+        var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
+        var formattedTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
+        var formattedEmployerTitle = formattedEmployer + formattedTitle;
+       
+        
+        $(".work-entry:last").append(formattedEmployerTitle);
+        
+        var formattedDates = HTMLworkDates.replace("%data%",work.jobs[job].dates);
+        $(".work-entry:last").append(formattedDates);
+        var formattedDescription = HTMLworkDescription.replace("%data%",work.jobs[job].description);
+        $(".work-entry:last").append(formattedDescription);
+    }
 }
+
+displayWork();
+projects.display();
+
+
+var inName = function( name ) {
+    name = name.trim().split(" ");
+    name[1] = name[1].toUpperCase();
+    name[0] = name[0].slice(0,1).toUpperCase() + name[0].slice(1).toLowerCase();
+    return name[0] + " " + name[1];
+}
+$("#main").append(internationalizeButton);
+$("#mapDiv").append(googleMap);
+/*$(document).click(function(location) {
+    console.log(location.pageX);
+    
+});*/
